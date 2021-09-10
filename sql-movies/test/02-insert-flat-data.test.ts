@@ -23,31 +23,45 @@ import { escape } from "../src/utils";
 import { minutes } from "./utils";
 
 const insertActors = (actors: string[]) => {
-  return (
-    `insert into actors (full_name) values` +
-    actors.map(actor => `('${escape(actor)}')`).join(",")
+  return (`Insert Into ${ACTORS} (full_name) 
+          values` +
+          actors.map(actor => `('${escape(actor)}')`).join(",")
   );
 };
 
 const insertKeywords = (keywords: string[]) => {
-  throw new Error(`todo`);
+  return (`Insert Into ${KEYWORDS} (keyword) 
+          values` + keywords.map(keyword => `('${escape(keyword)}')`).join(",")
+  );
 };
 
 const insertDirectors = (directors: string[]) => {
-  throw new Error(`todo`);
-};
+  return(`Insert Into ${DIRECTORS} (full_name) 
+          values` + directors.map(director => `('${escape(director)}')`).join(",")
+  );
+    };
 
 const insertGenres = (genres: string[]) => {
-  throw new Error(`todo`);
+  return (`Insert Into ${GENRES} (genre) 
+          values` + genres.map(genre => `('${escape(genre)}')`).join(",")
+  );
 };
 
 const insertProductionCompanies = (companies: string[]) => {
-  throw new Error(`todo`);
+  return (`Insert Into ${PRODUCTION_COMPANIES} (company_name) 
+          values` + companies.map(company => `('${escape(company)}')`).join(",")
+  );
 };
 
 const insertMovies = (movies: Movie[]) => {
-  throw new Error(`todo`);
-};
+  return (`Insert Into ${MOVIES} 
+        (imdb_id, popularity, budget, budget_adjusted, revenue, revenue_adjusted, original_title, homepage, tagline, overview, runtime, release_date) 
+        values` +
+        movies.map(movie => `('${escape(movie.imdbId)}', '${movie.popularity}', '${movie.budget}', '${movie.budgetAdjusted}','${movie.revenue}', 
+                              '${movie.revenueAdjusted}', '${escape(movie.originalTitle)}', '${escape(movie.homepage)}', '${escape(movie.tagline||'')}', 
+                              '${escape(movie.overview)}','${movie.runtime}', '${escape(movie.releaseDate)}')`).join(", ")
+    );
+  };
 
 describe("Insert Flat Data", () => {
   let db: Database;
